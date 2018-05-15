@@ -7,10 +7,10 @@
 
 int main(void)
 {
-	int socket_desc;
+	int sockfd;
 	struct sockaddr_in6 homeserver;
 
-	socket_desc = socket(AF_INET6, SOCK_STREAM, 0);
+	sockfd = socket(AF_INET6, SOCK_STREAM, 0);
 	if (socket_desc == -1)
 		printf("Error %d : could not create socket.\n", errno);
 
