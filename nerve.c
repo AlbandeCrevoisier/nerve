@@ -17,5 +17,10 @@ int main(void)
 	addr.sin6_port = (in_port_t) 8448;
 	addr.sin6_addr = (struct in6_addr) { "::1" };
 
+	if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
+		printf("Error %d : could not connect socket.\n", errno);
+		return errno;
+	}
+
 	return 0;
 }
