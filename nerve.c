@@ -11,7 +11,7 @@ int main(void)
 	struct sockaddr_in6 addr;
 
 	sockfd = socket(AF_INET6, SOCK_STREAM, 0);
-	if (socket_desc == -1)
+	if (sockfd == -1)
 		printf("Error %d : could not create socket.\n", errno);
 
 	addr.sin6_port = (in_port_t) 8448;
