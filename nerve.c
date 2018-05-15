@@ -15,6 +15,7 @@ int main(void)
 		printf("Error %d : could not create socket.\n", errno);
 
 	homeserver.sin6_port = (in_port_t) 8448;
+	homeserver.sin6_addr = (struct in6_addr) { "::1" };
 
 	return 0;
 }
