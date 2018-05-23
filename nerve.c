@@ -1,4 +1,4 @@
-/* Matrix client playground ***************************************************/
+/* Matrix client playground */
 
 #include <stdio.h>
 #include <errno.h>
@@ -14,7 +14,7 @@ int main(void)
 	if (sockfd == -1)
 		printf("Error %d : could not create socket.\n", errno);
 
-	addr.sin6_port = (in_port_t) 8448;
+	addr.sin6_port = (in_port_t) 8080;
 	addr.sin6_addr = (struct in6_addr) { "::1" };
 
 	if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
