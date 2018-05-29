@@ -11,8 +11,8 @@ int main(void)
 {
 	int sockfd;
 	struct sockaddr_in6 addr;
-	char in[1024], out[1024];
-	int r, rcv, rest;
+	char in[1024], out[1024], s[1025];
+	int r;
 	const char* msg = "GET / HTTP/1.1\r\n\r\n";
 
 	sockfd = socket(AF_INET6, SOCK_STREAM, 0);
@@ -33,30 +33,22 @@ int main(void)
 	}
 
 	strncpy(out, msg, strlen(msg)+1);
-
 	if (write(sockfd, out, strlen(out)+1) == -1) {
 		printf("Error %d: could not write message.\n", errno);
 		return errno;
 	}
 
-	rcv = 0;
-	rest = sizeof(in)-1;
-	do {
-		if((r = read(sockfd, in+rcv, rest)) == -1 ) {
+	r = 0;
+	while (r == 0) {
+		if((r = read(sockfd, in, strlen(in))) == -1 ) {
 			printf("Error %d: could not read message.\n", errno);
 			return errno;
 		}
-		rcv += r;
-		rest -= r;
-		if (rest < 1) {
-			printf("Error: server message longer than buffer.\n");
-			return -1;
-		}
-	} while (r != 0);
+	}
+	printf("Read %d bytes:\n", r);
+	strncpy(s, in, r+1);
+	printf("%s\n", s);
 
-	printf("%d\n", rcv);
-	strncpy(in, in, strlen(in)+1);
-	printf("%s\n", in);
 
 	close(sockfd);
 
