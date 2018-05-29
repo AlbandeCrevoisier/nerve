@@ -38,13 +38,14 @@ int main(void)
 		return errno;
 	}
 
-	r = 0;
-	while (r == 0) {
-		if((r = read(sockfd, in, strlen(in))) == -1 ) {
-			printf("Error %d: could not read message.\n", errno);
-			return errno;
-		}
+	if((r = read(sockfd, in, sizeof(in))) == -1) {
+		printf("Error %d: could not read message.\n", errno);
+		return errno;
+	} else if (r == sizeof(in)) {
+		printf("Error: answer overflows buffer.\n");
+		return -1;
 	}
+
 	printf("Read %d bytes:\n", r);
 	strncpy(s, in, r+1);
 	printf("%s\n", s);
